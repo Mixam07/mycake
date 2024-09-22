@@ -68,23 +68,21 @@ const cakeSchema = new mongoose.Schema({
         type: [Buffer],
         require: true
     },
-    categories: {
-        type: [String],
-        require: true
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Category'
     }
     /*
-    owner: {
-
-    },
     rewievs: {
 
     },
     */
 });
 
-cakeSchema.methods.getPublicData = function() {
+cakeSchema.methods.getPublicData = async function() {
     const cake = this;
-    const readableValues = ["name", "description", "status", "price", "tags", "weight", "filling", "additional_services", "min_weight", "max_weight", "categories", "id"];
+    const readableValues = ["name", "description", "status", "price", "tags", "weight", "filling", "additional_services", "min_weight", "max_weight", "id"];
     const publicCakeData = {};
 
     for(const key in cake){
@@ -101,53 +99,6 @@ cakeSchema.methods.getPublicData = function() {
     
     return publicCakeData
 }
-
-/*
-userSchema.virtual('tasks', {
-    ref: 'Task',
-    localField: '_id',
-    foreignField: 'owner'
-})
-
-userSchema.methods.getTocken = function() {
-    //console.log(this)
-}
-
-
-userSchema.statics.findByCredentials = async (email, password) => {
-    const user = await User.findOne({ email });
-
-    if(!user){
-        throw new Error("Unable to login")
-    }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if(!isMatch){
-        throw new Error("Unable to login")
-    }
-
-    return user
-}
-
-userSchema.pre("save", async function(next) {
-    const user = this;
-
-    if(user.isModified("password")){
-        user.password = await bcrypt.hash(user.password, 8)
-    }
-
-    next();
-})
-
-userSchema.pre('deleteOne', { document: true }, async function(next) {
-    const user = this;
-
-    await Task.deleteMany({ owner: user._id })
-
-    next();
-})
-*/
 
 const Cake = mongoose.model('Cake', cakeSchema);
 
