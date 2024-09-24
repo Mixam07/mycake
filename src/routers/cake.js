@@ -45,7 +45,7 @@ router.get("/cakes/:id", async (req, res) => {
         const cake = await Cake.findById(req.params.id);
 
         if(!cake){
-            return res.status(400).send({});
+            return res.status(400).send({ error: "Cake do not finded" });
         }
 
         res.status(200).send(await cake.getPublicData());
@@ -62,7 +62,7 @@ router.get("/cakes/:id_cake/photos/:id_photo", async (req, res) => {
         res.set("Content-Type", "image/jpg")
         res.send(photo)
     }catch(e){
-        res.send("")
+        res.send(e)
     }
 });
 
@@ -116,7 +116,7 @@ router.patch("/cakes/:id", upload.array("photos", 10), async (req, res) => {
         const cake = await Cake.findById(req.params.id);
 
         if(!cake){
-            return res.status(400).send()
+            return res.status(400).send({ error: "Cake do not finded" })
         }
         
         updates.forEach(update => {
@@ -147,7 +147,7 @@ router.delete("/cake/:id", async (req, res) => {
         const cake = await Cake.findById(req.params.id) 
 
         if(!cake){
-            return res.status(400).send({})
+            return res.status(400).send({ error: "User do not finded" })
         }
 
         await cake.deleteOne();

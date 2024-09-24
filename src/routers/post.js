@@ -44,7 +44,7 @@ router.get("/posts/:id", async (req, res) => {
         const post = await Post.findById(req.params.id);
         
         if(!post){
-            return res.status(400).send({})
+            return res.status(400).send({ error: "Post do not finded" })
         }
 
         res.status(200).send(await post.getPublicData())
@@ -60,7 +60,7 @@ router.get("/posts/:id/photo", async (req, res) => {
         res.set("Content-Type", "image/jpg")
         res.send(cake.photo)
     }catch(e){
-        res.send("")
+        res.send(e)
     }
 });
 
@@ -102,7 +102,7 @@ router.patch("/posts/:id", upload.single('photo'), async (req, res) => {
         const post = await Post.findById(req.params.id);
 
         if(!post){
-            return res.status(400).send({})
+            return res.status(400).send({ error: "Post do not finded" })
         }
         
         updates.forEach(update => {
@@ -130,7 +130,7 @@ router.delete("/posts/:id", async (req, res) => {
         const post = await Post.findById(req.params.id);
 
         if(!post){
-            return res.status(400).send({})
+            return res.status(400).send({ error: "Post do not finded" })
         }
 
         await post.deleteOne();
