@@ -8,7 +8,7 @@ const multer = require("multer");
 
 const upload = multer({
     storage: multer.memoryStorage(),
-    dest: "confectioners",
+    dest: "buyers",
     fileFilter(req, file, cb){
         const extension = file.originalname.toLowerCase().match(/\.(jpg|jpeg|png|gif)$/);
         
@@ -22,31 +22,31 @@ const upload = multer({
 
 //GET
 
-router.get("/confectioners", async (req, res) => {
+router.get("/buyers", async (req, res) => {
     try{
         const limit = req.query.limit? +req.query.limit: 10;
     
-        const confectioners = await Confectioner.find({}).skip(+req.query.skip).limit(limit);
+        const buyers = await Buyer.find({}).skip(+req.query.skip).limit(limit);
         const responce = [];
 
-        for(let i = 0; i < confectioners.length; i++){
-           const confectioner = confectioners[i]
+        for(let i = 0; i < buyers.length; i++){
+           const buyer = buyers[i]
 
-           responce.push(await confectioner.getPublicData())
+           responce.push(await buyer.getPublicData())
         }
-        
+       
         res.status(200).send(responce);
-    }catch(e){
-        res.status(400).send(e);
+    }catch(e) {
+        res.status(400).send(e)
     }
 });
 
-router.get("/confectioners/:id", async (req, res) => {
+router.get("/buyers/:id", async (req, res) => {
     try{
-        const user = await Confectioner.findById(req.params.id);
+        const user = await Buyer.findById(req.params.id);
 
         if(!user){
-            res.status(400).send({ error: "User do not finded" })
+            res.status.send({ error: "Buyer do not finded" });
         }
 
         res.status(200).send(await user.getPublicData())
@@ -55,12 +55,12 @@ router.get("/confectioners/:id", async (req, res) => {
     }
 });
 
-router.get("/confectioners/:id/photo", async (req, res) => {
+router.get("/buyers/:id/photo", async (req, res) => {
     try{
-        const user = await Confectioner.findById(req.params.id);
+        const user = await Buyer.findById(req.params.id);
 
-        res.set("Content-Type", "image/jpg")
-        res.send(user.photo)
+        res.set("Content-Type", "image/jpg");
+        res.send(user.photo);
     }catch(e) {
         res.send("")
     }
@@ -68,7 +68,7 @@ router.get("/confectioners/:id/photo", async (req, res) => {
 
 //POST
 
-router.post("/confectioners/registration", async (req, res) => {
+router.post("/buyers/registration", async (req, res) => {
     try{
         if(!phone(req.body.phone,  {country: "UA"}).isValid){
             res.status(400).send({ error: "Enter valid phone" })
@@ -81,19 +81,19 @@ router.post("/confectioners/registration", async (req, res) => {
             res.status(400).send({ error: "This phone number is already in use" })
         }
 
-        const confectioner = new Confectioner(req.body)
+        const buyer = new Buyer(req.body)
 
-        await confectioner.save();
+        await buyer.save();
 
-        res.status(200).send(await confectioner.getPublicData());
+        res.status(200).send(await buyer.getPublicData());
     }catch(e) {
         res.status(400).status(e);
     }
 });
 
-router.post("/confectioners/login", async (req, res) => {
+router.post("/buyers/login", async (req, res) => {
     try{
-        const user = await Confectioner.findOne({ phone: req.body.phone });
+        const user = await Buyer.findOne({ phone: req.body.phone });
 
         if(!user){
             res.status(400).send({ error: "User do not finded" });
@@ -105,9 +105,9 @@ router.post("/confectioners/login", async (req, res) => {
     }
 });
 
-router.post("/confectioners/code", async (req, res) => {
+router.post("/buyers/code", async (req, res) => {
     try{   
-        const user = await Confectioner.findOne({ phone: req.body.phone });
+        const user = await Buyer.findOne({ phone: req.body.phone });
 
         if(!user){
             res.status(400).send({ error: "User do not finded" });
@@ -127,18 +127,18 @@ router.post("/confectioners/code", async (req, res) => {
 
 //PATCH
 
-router.patch("/confectioners/:id", upload.single('photo'), async (req, res) => {
+router.patch("/buyers/:id", upload.single('photo'), async (req, res) => {
     try{
         const data = req.body.data ? JSON.parse(req.body.data): {};
         const updates = Object.keys(data);
-        const allowedUpdates = ["name", "phone", "description", "address", "email", "delivery", "payment", "instagram", "facebook", "youtube"];
+        const allowedUpdates = ["name", "phone"];
         const isValidOperation = updates.every(update => allowedUpdates.includes(update));
 
         if(!isValidOperation){
             return res.status(400).send({ error: "Invalid updates!" });
         }
 
-        const user = await Confectioner.findById(req.params.id);
+        const user = await Buyer.findById(req.params.id);
 
         if(!user){
             res.status(400).send({ error: "User do not finded" });
@@ -155,26 +155,22 @@ router.patch("/confectioners/:id", upload.single('photo'), async (req, res) => {
         await user.save();
 
         res.status(200).send(await user.getPublicData())
-    }catch(e) {
-        res.status(400).send(e)
+    }catch(e){
+        res.status(400).send(e);
     }
 });
 
 //DELETE
 
-router.delete("/confectioners/:id", async (req, res) => {
+router.delete("/buyers/:id", async (req, res) => {
     try{
-        const confectioner = await Confectioner.findById(req.params.id);
+        const user = await Buyer.findById(req.params.id);
 
-        if(!confectioner){
-            res.status(400).send({ error: "Confectioner do not finded" });
-        }
+        await user.deleteOne();
 
-        await confectioner.deleteOne();
-
-        res.status(200).send(await confectioner.getPublicData())
-    }catch(e) {
-        res.status(400).send(e)
+        res.status(200).send(await user.getPublicData());
+    }catch(e){
+        res.status(400).send(e);
     }
 });
 

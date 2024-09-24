@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-var jwt = require('jsonwebtoken');
 
 const confectionersSchema = new mongoose.Schema({
     name: {
@@ -36,26 +35,8 @@ const confectionersSchema = new mongoose.Schema({
     },
     youtube: {
         type: String
-    },
-    tokens: [{
-        token: {
-            type: String,
-            require: true
-        }
-    }]
+    }
 });
-
-confectionersSchema.methods.generateAuthToken = async function() {
-    const confectioner = this;
-    const key = process.env.KEY;
-    const token = jwt.sign({ id: confectioner.toString() }, key);
-    
-    confectioner.tokens = confectioner.tokens.concat({ token })
-
-    await confectioner.save();
-
-    return token
-}
 
 confectionersSchema.methods.getPublicData = async function() {
     const confectioner = this
@@ -73,6 +54,8 @@ confectionersSchema.methods.getPublicData = async function() {
 
         publicConfectionersData.photoURL = `${url}/confectioners/${confectioner._id}/photo`
     }
+
+    publicConfectionersData.type = "confectioner";
 
     return publicConfectionersData
 }

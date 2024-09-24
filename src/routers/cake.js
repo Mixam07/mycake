@@ -62,7 +62,7 @@ router.get("/cakes/:id_cake/photos/:id_photo", async (req, res) => {
         res.set("Content-Type", "image/jpg")
         res.send(photo)
     }catch(e){
-        res.send(e)
+        res.send("")
     }
 });
 
