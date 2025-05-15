@@ -4,6 +4,7 @@ import { getAuth, login, logout, registrateBuyer, registrateConfectioners, sendC
 const SET_USER = "SET-USER/users";
 const SET_EMAIL = "SET-EMAIL/users";
 const SET_TYPE = "SET-TYPE/users";
+const SET_STATUS = "SET-STATUS/users";
 
 export interface User {
     id?: string;
@@ -19,12 +20,14 @@ export interface UsersState {
     user: User | null;
     activeEmail: string | null;
     typeReg: "confectioners" | "buyer" | null;
+    status: boolean;
 }
 
 const initialState: UsersState = {
     user: null,
     activeEmail: null,
     typeReg: null,
+    status: false
 };
 
 const usersReducer = (state = initialState, action: any): UsersState => {
@@ -44,6 +47,11 @@ const usersReducer = (state = initialState, action: any): UsersState => {
                 ...state,
                 typeReg: action.typeReg
             };
+        case SET_STATUS:
+            return {
+                ...state,
+                status: action.status
+            };
         default:
             return state;
     }
@@ -52,6 +60,7 @@ const usersReducer = (state = initialState, action: any): UsersState => {
 export const setUser = (data: User | null) => ({type: SET_USER, data});
 export const setEmail = (email: string) => ({type: SET_EMAIL, email});
 export const setType = (typeReg: string) => ({type: SET_TYPE, typeReg});
+export const setStatus = (status: boolean) => ({type: SET_STATUS, status});
 
 export const registrateUserThunkCreator = (user: User, type: "confectioners" | "buyer") => async (dispatch: Dispatch) => {
     if (type == "buyer") {
@@ -79,6 +88,8 @@ export const getAuthThunkCreator = () => async (dispatch: Dispatch) => {
     if (result) {
         await dispatch(setUser(result));
     }
+
+    dispatch(setStatus(true));
 };
 
 export const logoutThunkCreator = () => async (dispatch: Dispatch) => {

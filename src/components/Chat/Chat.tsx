@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
-import { Navigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./Chat.css"
 import { NavLink } from "react-router-dom";
 
@@ -9,6 +9,12 @@ const socket = io("http://localhost:3000", {
 });
 
 const Chat = (props: any) => {
+    const navigate = useNavigate();
+
+    if(props.status && !props.person){
+        navigate("/");
+    }
+
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
     const { id } = useParams();
     const chat = props.chats?.find((item: any) => item.opponent._id == id);

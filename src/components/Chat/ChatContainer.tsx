@@ -8,6 +8,8 @@ const mapStateToProps = (state: RootState) => ({
     senderId: state.users.user?.id,
     senderName: state.users.user?.name,
     user: state.chats.user,
+    person: state.users.user,
+    status: state.users.status
 });
 
 const connector = connect(mapStateToProps, {

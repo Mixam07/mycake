@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { getCake, getCakes } from "../../api/cakes";
+import { createCake, getCake, getCakes } from "../../api/cakes";
 
 const SET_CAKES = "SET-CAKES/cakes";
 const SET_CAKE = "SET-CAKE/cakes";
@@ -61,6 +61,16 @@ export const getCakeThunkCreator = (id: string) => async (dispatch: Dispatch) =>
     
     if (result) {
         dispatch(setCake(result));
+    }
+};
+
+export const createCakeThunkCreator = (data: object, images: File[]) => async (dispatch: Dispatch) => {
+    const result = await createCake(data, images);
+    
+    if (result) {
+        return {
+            status: "ok"
+        }
     }
 };
 
