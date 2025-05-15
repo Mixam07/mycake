@@ -1,0 +1,25 @@
+.header__wrapper{
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header{
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    background-color: #fff;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.header__user{
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.header__user *{
+    color: #43607C;
+}

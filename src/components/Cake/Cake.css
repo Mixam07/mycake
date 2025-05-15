@@ -1,0 +1,112 @@
+.cake{
+    padding-top: 40px;
+    padding-bottom: 80px;
+}
+
+.cake__wrapper{
+    display: flex;
+    column-gap: 80px;
+    align-items: center;
+    margin-bottom: 80px;
+}
+
+.cake__main-image{
+    width: 450px;
+    height: 450px;
+    margin-bottom: 15px;
+}
+
+.cake__main-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.cake__images{
+    display: flex;
+    column-gap: 10px;
+}
+
+.cake__images img{
+    width: 100%;
+    max-width: 82px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.cake__tags{
+    margin-bottom: 15px;
+    display: flex;
+    column-gap: 5px;
+}
+
+.cake__tag{
+    display: block;
+    padding: 5px 10px;
+    color: rgba(142, 74, 78, 1);
+    font-size: 14px;
+    background-color: rgba(255, 242, 242, 1);
+    border-radius: 15px;
+}
+
+.cake__title{
+    color: rgba(67, 96, 124, 1);
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.cake__price{
+    color: rgba(166, 58, 80, 1);
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.cake__description{
+    max-width: 800px;
+    color: rgba(67, 96, 124, 1);
+    line-height: 24px;
+}
+
+.cake__wrap{
+    display: flex;
+    column-gap: 80px;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.cake__photo{
+    width: 250px;
+    height: 250px;
+    border-radius: 10px;
+    background-color: #F6FDEE;
+}
+
+.cake__photo img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    border: none;
+}
+
+.cake__name{
+    font-size: 24px;
+    font-weight: 700;
+    color: rgba(67, 96, 124, 1);
+    margin-bottom: 15px;
+}
+
+.cake__link{
+    padding: 10px 50px;
+    background-color: rgba(253, 173, 109, 1);
+    border-radius: 25px;
+    color: rgba(94, 45, 7, 1);
+    display: block;
+}
+
+.cake__desc{
+    color: rgba(67, 96, 124, 1);
+}

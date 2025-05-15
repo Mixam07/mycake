@@ -1,0 +1,66 @@
+input{
+    border: 1px solid #000;
+}
+
+.create-cake__container{
+    max-width: 1000px;
+}
+
+.create-cake__title{
+    color: rgba(1, 25, 54, 1);
+    font-size: 35px;
+}
+
+
+
+
+
+.images-preview {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 10px;
+    margin: 10px 0;
+  }
+  
+  .image-item {
+    position: relative;
+  }
+  
+  .image-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .delete-btn {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: #ff4d4f;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    font-size: 14px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+  }
+  
+  .add-photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #a63a50;
+    font-weight: bold;
+    font-size: 14px;
+  }
